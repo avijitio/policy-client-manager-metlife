@@ -63,8 +63,8 @@ function renderClients(clients) {
       ? `<img src="${client.photo_url}" alt="${client.name}" class="client-avatar">`
       : `<div class="client-avatar-placeholder">${client.name ? client.name.charAt(0).toUpperCase() : '?'}</div>`;
 
-    const amountHtml = client.amount ? `<span class="detail-item">💰 পরিমাণ: ৳${Number(client.amount).toLocaleString('bn-BD')}</span>` : '';
-    const startHtml = client.start_date ? `<span class="detail-item">📅 শুরু: ${formatDate(client.start_date)}</span>` : '';
+    const amountHtml = client.amount ? `<span class="detail-item">💰 <span data-bn="পরিমাণ" data-en="Amount">পরিমাণ</span>: ৳${Number(client.amount).toLocaleString('bn-BD')}</span>` : '';
+    const sigBadge = client.signature_url ? `<span class="badge badge-sig">✍️ <span data-bn="স্বাক্ষর আছে" data-en="Signed">স্বাক্ষর আছে</span></span>` : '';
 
     return `
       <div class="client-card" id="card-${client.id}">
@@ -78,10 +78,9 @@ function renderClients(clients) {
           </div>
         </div>
         <div class="card-details">
-          <span class="detail-item">👤 নমিনি: ${escHtml(client.nominee || '—')}</span>
-          ${startHtml}
-          <span class="detail-item">📅 মেয়াদ শেষ: ${formatDate(client.expiry_date)}</span>
+          <span class="detail-item">👤 <span data-bn="নমিনি" data-en="Nominee">নমিনি</span>: ${escHtml(client.nominee || '—')}</span>
           ${amountHtml}
+          ${sigBadge}
         </div>
         <div class="card-actions">
           <a href="tel:${client.phone}" class="btn btn-call">
@@ -157,8 +156,6 @@ async function addClient() {
   const policy_number = document.getElementById('add_policy').value.trim();
   const phone = document.getElementById('add_phone').value.trim();
   const nominee = document.getElementById('add_nominee').value.trim();
-  const expiry_date = document.getElementById('add_expiry').value;
-  const start_date = document.getElementById('add_start_date').value;
   const amount = document.getElementById('add_amount').value;
 
   if (!name || !policy_number || !phone) {
@@ -170,17 +167,19 @@ async function addClient() {
     if (!existing.empty) { showToast('এই পলিসি নম্বর আগে থেকেই আছে!', 'error'); btn.disabled = false; btn.textContent = 'সংরক্ষণ করুন'; return; }
 
     const uid = auth.currentUser.uid;
-    let photo_url = '', id_card_url = '', nominee_id_url = '';
+    let photo_url = '', id_card_url = '', nominee_id_url = '', signature_url = '';
     const photoFile = document.getElementById('add_photo').files[0];
     const idFile = document.getElementById('add_idcard').files[0];
     const nomFile = document.getElementById('add_nomineeId').files[0];
+    const sigFile = document.getElementById('add_signature').files[0];
     if (photoFile) photo_url = await uploadFile(photoFile);
     if (idFile) id_card_url = await uploadFile(idFile);
     if (nomFile) nominee_id_url = await uploadFile(nomFile);
+    if (sigFile) signature_url = await uploadFile(sigFile);
 
     await db.collection('clients').add({
-      name, policy_number, phone, nominee, expiry_date, start_date, amount,
-      photo_url, id_card_url, nominee_id_url,
+      name, policy_number, phone, nominee, amount,
+      photo_url, id_card_url, nominee_id_url, signature_url,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       userId: uid
     });
@@ -199,12 +198,11 @@ function openEditModal(id) {
   document.getElementById('edit_policy').value = client.policy_number || '';
   document.getElementById('edit_phone').value = client.phone || '';
   document.getElementById('edit_nominee').value = client.nominee || '';
-  document.getElementById('edit_expiry').value = client.expiry_date || '';
-  document.getElementById('edit_start_date').value = client.start_date || '';
   document.getElementById('edit_amount').value = client.amount || '';
   setPreview('editPhotoPreview', client.photo_url);
   setPreview('editIdPreview', client.id_card_url);
   setPreview('editNomIdPreview', client.nominee_id_url);
+  setPreview('editSigPreview', client.signature_url);
   openModal('editModal');
 }
 
@@ -223,8 +221,6 @@ async function updateClient() {
   const policy_number = document.getElementById('edit_policy').value.trim();
   const phone = document.getElementById('edit_phone').value.trim();
   const nominee = document.getElementById('edit_nominee').value.trim();
-  const expiry_date = document.getElementById('edit_expiry').value;
-  const start_date = document.getElementById('edit_start_date').value;
   const amount = document.getElementById('edit_amount').value;
 
   if (!name || !policy_number || !phone) {
@@ -236,16 +232,19 @@ async function updateClient() {
     let photo_url = existing.photo_url || '';
     let id_card_url = existing.id_card_url || '';
     let nominee_id_url = existing.nominee_id_url || '';
+    let signature_url = existing.signature_url || '';
     const photoFile = document.getElementById('edit_photo').files[0];
     const idFile = document.getElementById('edit_idcard').files[0];
     const nomFile = document.getElementById('edit_nomineeId').files[0];
+    const sigFile = document.getElementById('edit_signature').files[0];
     if (photoFile) photo_url = await uploadFile(photoFile);
     if (idFile) id_card_url = await uploadFile(idFile);
     if (nomFile) nominee_id_url = await uploadFile(nomFile);
+    if (sigFile) signature_url = await uploadFile(sigFile);
 
     await db.collection('clients').doc(currentEditId).update({
-      name, policy_number, phone, nominee, expiry_date, start_date, amount,
-      photo_url, id_card_url, nominee_id_url,
+      name, policy_number, phone, nominee, amount,
+      photo_url, id_card_url, nominee_id_url, signature_url,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     showToast('✅ ক্লায়েন্ট আপডেট হয়েছে!', 'success');
@@ -291,9 +290,10 @@ function viewDocs(id) {
 
   body.innerHTML = `
     <h3 class="doc-client-name">${escHtml(client.name)} — ${escHtml(client.policy_number)}</h3>
-    ${docItem(client.photo_url, '👤 ক্লায়েন্ট ছবি')}
-    ${docItem(client.id_card_url, '🪪 আইডি কার্ড')}
-    ${docItem(client.nominee_id_url, '🪪 নমিনির আইডি কার্ড')}`;
+    ${docItem(client.photo_url, '👤 ক্লায়েন্ট ছবি / Client Photo')}
+    ${docItem(client.id_card_url, '🪪 আইডি কার্ড / ID Card')}
+    ${docItem(client.nominee_id_url, '🪪 নমিনির আইডি কার্ড / Nominee ID')}
+    ${docItem(client.signature_url, '✍️ স্বাক্ষর / Signature')}`;
   openModal('docsModal');
 }
 
@@ -565,7 +565,7 @@ function closeModal(id) { document.getElementById(id).classList.remove('active')
 
 function resetAddForm() {
   document.getElementById('addClientForm').reset();
-  ['addPhotoPreview','addIdPreview','addNomIdPreview'].forEach(id => {
+  ['addPhotoPreview','addIdPreview','addNomIdPreview','addSigPreview'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.innerHTML = ''; el.style.display = 'none'; }
   });
