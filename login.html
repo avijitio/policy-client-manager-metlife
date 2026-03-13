@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>লগইন — Policy Client Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+
+  <div class="login-logo">
+    <div class="logo-icon">🛡️</div>
+    <h1>Policy Client Manager</h1>
+    <p>MetLife Insurance Advisor Portal</p>
+  </div>
+
+  <div class="login-card">
+    <h2>স্বাগতম!</h2>
+    <p class="login-subtitle">আপনার অ্যাকাউন্টে লগইন করুন</p>
+
+    <div class="form-group">
+      <label>ইমেইল অ্যাড্রেস</label>
+      <div class="input-wrap">
+        <span class="input-icon">📧</span>
+        <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>পাসওয়ার্ড</label>
+      <div class="input-wrap">
+        <span class="input-icon">🔒</span>
+        <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password">
+      </div>
+    </div>
+
+    <span class="error-msg" id="errorMsg"></span>
+
+    <button class="btn-login" id="loginBtn" onclick="handleLogin()">
+      লগইন করুন →
+    </button>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+  <script src="firebase.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Redirect if already logged in
+    checkLoginRedirect();
+
+    function handleLogin() {
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      if (!email || !password) {
+        document.getElementById('errorMsg').textContent = '❌ ইমেইল ও পাসওয়ার্ড দিন।';
+        return;
+      }
+      loginUser(email, password);
+    }
+
+    // Enter key support
+    document.getElementById('passwordInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+    document.getElementById('emailInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('passwordInput').focus();
+    });
+  </script>
+</body>
+</html>
