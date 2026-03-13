@@ -184,6 +184,11 @@
           <div class="img-preview" id="addIdPreview"></div>
         </div>
         <div class="file-upload-wrap" style="margin-bottom:12px">
+          <label class="file-upload-btn">📷 <span data-bn="নমিনির ছবি" data-en="Nominee Photo">নমিনির ছবি</span>
+            <input type="file" id="add_nomineePhoto" accept="image/*" onchange="previewImage('add_nomineePhoto','addNomPhotoPreview')"></label>
+          <div class="img-preview" id="addNomPhotoPreview"></div>
+        </div>
+        <div class="file-upload-wrap" style="margin-bottom:12px">
           <label class="file-upload-btn">🪪 <span data-bn="নমিনির আইডি কার্ড" data-en="Nominee ID Card">নমিনির আইডি কার্ড</span>
             <input type="file" id="add_nomineeId" accept="image/*" onchange="previewImage('add_nomineeId','addNomIdPreview')"></label>
           <div class="img-preview" id="addNomIdPreview"></div>
@@ -234,6 +239,11 @@
           <label class="file-upload-btn">🪪 <span data-bn="নতুন আইডি কার্ড (ঐচ্ছিক)" data-en="New ID Card (Optional)">নতুন আইডি কার্ড (ঐচ্ছিক)</span>
             <input type="file" id="edit_idcard" accept="image/*" onchange="previewImage('edit_idcard','editIdPreview')"></label>
           <div class="img-preview" id="editIdPreview"></div>
+        </div>
+        <div class="file-upload-wrap" style="margin-bottom:12px">
+          <label class="file-upload-btn">📷 <span data-bn="নমিনির নতুন ছবি (ঐচ্ছিক)" data-en="New Nominee Photo (Optional)">নমিনির নতুন ছবি (ঐচ্ছিক)</span>
+            <input type="file" id="edit_nomineePhoto" accept="image/*" onchange="previewImage('edit_nomineePhoto','editNomPhotoPreview')"></label>
+          <div class="img-preview" id="editNomPhotoPreview"></div>
         </div>
         <div class="file-upload-wrap" style="margin-bottom:12px">
           <label class="file-upload-btn">🪪 <span data-bn="নমিনির নতুন আইডি (ঐচ্ছিক)" data-en="New Nominee ID (Optional)">নমিনির নতুন আইডি (ঐচ্ছিক)</span>
