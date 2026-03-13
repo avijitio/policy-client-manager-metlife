@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-lang="bn" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
 
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
-  <span class="loading-text">লোড হচ্ছে...</span>
+  <span class="loading-text" data-bn="লোড হচ্ছে..." data-en="Loading...">লোড হচ্ছে...</span>
 </div>
 <div class="toast-container" id="toastContainer"></div>
 
@@ -22,32 +22,40 @@
   </div>
   <div class="nav-right">
     <span class="nav-user" id="userEmail"></span>
-    <button class="btn-logout" onclick="logoutUser()">লগআউট</button>
+    <button class="nav-toggle-btn" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+      <span id="langIcon">বাং</span><span id="langText"> / EN</span>
+    </button>
+    <button class="nav-toggle-btn dark-toggle" id="darkModeBtn" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+      <span id="themeIcon">🌙</span>
+    </button>
+    <button class="btn-logout" onclick="logoutUser()" data-bn="লগআউট" data-en="Logout">লগআউট</button>
   </div>
 </nav>
 
 <!-- ── TAB NAV ───────────────────────────────────────────────── -->
 <div class="tab-nav">
-  <button class="tab-btn active" id="tabBtnClients" onclick="switchTab('clients')">👥 ক্লায়েন্ট</button>
-  <button class="tab-btn" id="tabBtnReports" onclick="switchTab('reports')">📊 রিপোর্ট</button>
+  <button class="tab-btn active" id="tabBtnClients" onclick="switchTab('clients')">
+    <span>👥</span> <span data-bn="ক্লায়েন্ট" data-en="Clients">ক্লায়েন্ট</span>
+  </button>
+  <button class="tab-btn" id="tabBtnReports" onclick="switchTab('reports')">
+    <span>📊</span> <span data-bn="রিপোর্ট" data-en="Reports">রিপোর্ট</span>
+  </button>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     CLIENTS TAB
-     ══════════════════════════════════════════════════════════ -->
+<!-- ═══════════ CLIENTS TAB ═══════════ -->
 <main class="main-content" id="tabClients">
   <div class="stats-row">
     <div class="stat-card stat-blue">
       <div class="stat-num" id="statTotal">0</div>
-      <div class="stat-label">মোট ক্লায়েন্ট</div>
+      <div class="stat-label" data-bn="মোট ক্লায়েন্ট" data-en="Total Clients">মোট ক্লায়েন্ট</div>
     </div>
     <div class="stat-card stat-orange">
       <div class="stat-num" id="statExpiring">0</div>
-      <div class="stat-label">শেষ হচ্ছে (৩০ দিন)</div>
+      <div class="stat-label" data-bn="শেষ হচ্ছে (৩০ দিন)" data-en="Expiring (30 days)">শেষ হচ্ছে (৩০ দিন)</div>
     </div>
     <div class="stat-card stat-red">
       <div class="stat-num" id="statExpired">0</div>
-      <div class="stat-label">মেয়াদ শেষ</div>
+      <div class="stat-label" data-bn="মেয়াদ শেষ" data-en="Expired">মেয়াদ শেষ</div>
     </div>
   </div>
 
@@ -56,229 +64,225 @@
   <div class="toolbar">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" placeholder="পলিসি নম্বর, নাম বা ফোন দিয়ে খুঁজুন..." id="searchInput" oninput="searchClients(this.value)">
+      <input type="text" id="searchInput" oninput="searchClients(this.value)"
+        data-bn-placeholder="পলিসি নম্বর, নাম বা ফোন দিয়ে খুঁজুন..."
+        data-en-placeholder="Search by policy no, name or phone..."
+        placeholder="পলিসি নম্বর, নাম বা ফোন দিয়ে খুঁজুন...">
     </div>
     <button class="btn-excel" onclick="exportExcel()">📊 Excel</button>
-    <button class="btn-add" onclick="openModal('addModal')">＋ নতুন ক্লায়েন্ট</button>
+    <button class="btn-add" onclick="openModal('addModal')">
+      <span>＋</span> <span data-bn="নতুন ক্লায়েন্ট" data-en="New Client">নতুন ক্লায়েন্ট</span>
+    </button>
   </div>
 
   <div class="client-grid" id="clientGrid"></div>
   <div class="empty-state" id="emptyState">
     <div class="empty-icon">📋</div>
-    <h3>কোনো ক্লায়েন্ট নেই</h3>
-    <p>প্রথম ক্লায়েন্ট যোগ করতে "+ নতুন ক্লায়েন্ট" বোতামে ক্লিক করুন।</p>
+    <h3 data-bn="কোনো ক্লায়েন্ট নেই" data-en="No Clients Found">কোনো ক্লায়েন্ট নেই</h3>
+    <p data-bn='প্রথম ক্লায়েন্ট যোগ করতে "+ নতুন ক্লায়েন্ট" বোতামে ক্লিক করুন।' data-en='Click "+ New Client" to add your first client.'>প্রথম ক্লায়েন্ট যোগ করতে "+ নতুন ক্লায়েন্ট" বোতামে ক্লিক করুন।</p>
   </div>
 </main>
 
-<!-- ══════════════════════════════════════════════════════════
-     REPORTS TAB
-     ══════════════════════════════════════════════════════════ -->
+<!-- ═══════════ REPORTS TAB ═══════════ -->
 <main class="main-content" id="tabReports" style="display:none">
-
-  <!-- Date Range Filter -->
   <div class="report-filter-card">
-    <h3 class="report-filter-title">📅 তারিখ অনুযায়ী পলিসি খুঁজুন</h3>
+    <h3 class="report-filter-title">📅 <span data-bn="তারিখ অনুযায়ী পলিসি খুঁজুন" data-en="Filter Policies by Date">তারিখ অনুযায়ী পলিসি খুঁজুন</span></h3>
     <div class="report-filter-row">
       <div class="field">
-        <label>শুরুর তারিখ</label>
+        <label data-bn="শুরুর তারিখ" data-en="From Date">শুরুর তারিখ</label>
         <input type="date" id="reportFrom" class="report-date-input">
       </div>
       <div class="field">
-        <label>শেষের তারিখ</label>
+        <label data-bn="শেষের তারিখ" data-en="To Date">শেষের তারিখ</label>
         <input type="date" id="reportTo" class="report-date-input">
       </div>
       <div class="filter-btns">
-        <button class="btn-report-filter" onclick="filterByDate()">🔍 রিপোর্ট দেখুন</button>
-        <button class="btn-report-reset" onclick="resetDateFilter()">↺ রিসেট</button>
+        <button class="btn-report-filter" onclick="filterByDate()">🔍 <span data-bn="রিপোর্ট দেখুন" data-en="View Report">রিপোর্ট দেখুন</span></button>
+        <button class="btn-report-reset" onclick="resetDateFilter()">↺ <span data-bn="রিসেট" data-en="Reset">রিসেট</span></button>
       </div>
     </div>
   </div>
 
-  <!-- Report Summary Stats -->
   <div class="report-stats-row" id="reportStats"></div>
 
-  <!-- Filtered Results -->
   <div class="report-card" id="filteredListCard" style="display:none">
     <div class="report-card-header">
-      <h3 id="filteredListTitle">ফিল্টার করা ক্লায়েন্ট</h3>
+      <h3 id="filteredListTitle"></h3>
       <button class="btn-excel-sm" onclick="exportFilteredExcel()">📊 Excel</button>
     </div>
     <div id="filteredClientList"></div>
   </div>
 
-  <!-- Monthly Report -->
   <div class="report-card">
     <div class="report-card-header">
-      <h3>📈 মাসিক পলিসি রিপোর্ট</h3>
+      <h3>📈 <span data-bn="মাসিক পলিসি রিপোর্ট" data-en="Monthly Policy Report">মাসিক পলিসি রিপোর্ট</span></h3>
       <select id="reportYear" onchange="renderMonthlyReport()" class="year-select"></select>
     </div>
     <div class="monthly-bars" id="monthlyBars"></div>
   </div>
 
-  <!-- Expiry Report -->
   <div class="report-card">
     <div class="report-card-header">
-      <h3>⚠️ মেয়াদ শেষের রিপোর্ট</h3>
+      <h3>⚠️ <span data-bn="মেয়াদ শেষের রিপোর্ট" data-en="Expiry Report">মেয়াদ শেষের রিপোর্ট</span></h3>
     </div>
     <div class="expiry-report-tabs">
-      <button class="expiry-tab active" onclick="showExpiryReport('30', this)">৩০ দিন</button>
-      <button class="expiry-tab" onclick="showExpiryReport('60', this)">৬০ দিন</button>
-      <button class="expiry-tab" onclick="showExpiryReport('90', this)">৯০ দিন</button>
-      <button class="expiry-tab" onclick="showExpiryReport('expired', this)">মেয়াদ শেষ</button>
+      <button class="expiry-tab active" onclick="showExpiryReport('30', this)"><span data-bn="৩০ দিন" data-en="30 Days">৩০ দিন</span></button>
+      <button class="expiry-tab" onclick="showExpiryReport('60', this)"><span data-bn="৬০ দিন" data-en="60 Days">৬০ দিন</span></button>
+      <button class="expiry-tab" onclick="showExpiryReport('90', this)"><span data-bn="৯০ দিন" data-en="90 Days">৯০ দিন</span></button>
+      <button class="expiry-tab" onclick="showExpiryReport('expired', this)"><span data-bn="মেয়াদ শেষ" data-en="Expired">মেয়াদ শেষ</span></button>
     </div>
     <div id="expiryReportList"></div>
   </div>
-
 </main>
 
-<!-- ══════════════════════════════════════════════════════════
-     ADD MODAL
-     ══════════════════════════════════════════════════════════ -->
+<!-- ═══════════ ADD MODAL ═══════════ -->
 <div class="modal-overlay" id="addModal" onclick="handleOverlayClick(event,'addModal')">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">➕ নতুন ক্লায়েন্ট যোগ করুন</span>
+      <span class="modal-title">➕ <span data-bn="নতুন ক্লায়েন্ট যোগ করুন" data-en="Add New Client">নতুন ক্লায়েন্ট যোগ করুন</span></span>
       <button class="modal-close" onclick="closeModal('addModal')">✕</button>
     </div>
     <div class="modal-body">
       <form id="addClientForm" onsubmit="return false;">
-        <p class="section-label">📋 পলিসি তথ্য</p>
+        <p class="section-label">📋 <span data-bn="পলিসি তথ্য" data-en="Policy Information">পলিসি তথ্য</span></p>
         <div class="form-row two-col">
           <div class="field">
-            <label>পলিসি হোল্ডারের নাম *</label>
-            <input type="text" id="add_name" placeholder="পূর্ণ নাম লিখুন" required>
+            <label data-bn="পলিসি হোল্ডারের নাম *" data-en="Policy Holder Name *">পলিসি হোল্ডারের নাম *</label>
+            <input type="text" id="add_name" data-bn-placeholder="পূর্ণ নাম লিখুন" data-en-placeholder="Enter full name" placeholder="পূর্ণ নাম লিখুন" required>
           </div>
           <div class="field">
-            <label>পলিসি নম্বর *</label>
-            <input type="text" id="add_policy" placeholder="যেমন: MET-2024-001" required>
+            <label data-bn="পলিসি নম্বর *" data-en="Policy Number *">পলিসি নম্বর *</label>
+            <input type="text" id="add_policy" data-bn-placeholder="যেমন: MET-2024-001" data-en-placeholder="e.g. MET-2024-001" placeholder="যেমন: MET-2024-001" required>
           </div>
         </div>
         <div class="form-row two-col" style="margin-top:14px">
           <div class="field">
-            <label>ফোন নম্বর *</label>
+            <label data-bn="ফোন নম্বর *" data-en="Phone Number *">ফোন নম্বর *</label>
             <input type="tel" id="add_phone" placeholder="01XXXXXXXXX" required>
           </div>
           <div class="field">
-            <label>নমিনির নাম</label>
-            <input type="text" id="add_nominee" placeholder="নমিনির নাম">
-          </div>
-        </div>
-        <div class="form-row two-col" style="margin-top:14px">
-          <div class="field">
-            <label>📅 পলিসি শুরুর তারিখ</label>
-            <input type="date" id="add_start_date">
-          </div>
-          <div class="field">
-            <label>📅 মেয়াদ শেষের তারিখ</label>
-            <input type="date" id="add_expiry">
+            <label data-bn="নমিনির নাম" data-en="Nominee Name">নমিনির নাম</label>
+            <input type="text" id="add_nominee" data-bn-placeholder="নমিনির নাম" data-en-placeholder="Nominee's name" placeholder="নমিনির নাম">
           </div>
         </div>
         <div class="form-row" style="margin-top:14px">
           <div class="field">
-            <label>💰 পলিসির পরিমাণ (টাকা)</label>
-            <input type="number" id="add_amount" placeholder="যেমন: 50000">
+            <label data-bn="💰 পলিসির পরিমাণ (টাকা)" data-en="💰 Policy Amount (BDT)">💰 পলিসির পরিমাণ (টাকা)</label>
+            <input type="number" id="add_amount" data-bn-placeholder="যেমন: 50000" data-en-placeholder="e.g. 50000" placeholder="যেমন: 50000">
           </div>
         </div>
 
-        <p class="section-label">📎 ডকুমেন্ট আপলোড</p>
+        <p class="section-label">📎 <span data-bn="ডকুমেন্ট আপলোড" data-en="Document Upload">ডকুমেন্ট আপলোড</span></p>
         <div class="file-upload-wrap" style="margin-bottom:12px">
-          <label class="file-upload-btn">📷 ক্লায়েন্টের ছবি<input type="file" id="add_photo" accept="image/*" onchange="previewImage('add_photo','addPhotoPreview')"></label>
+          <label class="file-upload-btn">📷 <span data-bn="ক্লায়েন্টের ছবি" data-en="Client Photo">ক্লায়েন্টের ছবি</span>
+            <input type="file" id="add_photo" accept="image/*" onchange="previewImage('add_photo','addPhotoPreview')"></label>
           <div class="img-preview" id="addPhotoPreview"></div>
         </div>
         <div class="file-upload-wrap" style="margin-bottom:12px">
-          <label class="file-upload-btn">🪪 ক্লায়েন্টের আইডি কার্ড<input type="file" id="add_idcard" accept="image/*" onchange="previewImage('add_idcard','addIdPreview')"></label>
+          <label class="file-upload-btn">🪪 <span data-bn="ক্লায়েন্টের আইডি কার্ড" data-en="Client ID Card">ক্লায়েন্টের আইডি কার্ড</span>
+            <input type="file" id="add_idcard" accept="image/*" onchange="previewImage('add_idcard','addIdPreview')"></label>
           <div class="img-preview" id="addIdPreview"></div>
         </div>
-        <div class="file-upload-wrap">
-          <label class="file-upload-btn">🪪 নমিনির আইডি কার্ড<input type="file" id="add_nomineeId" accept="image/*" onchange="previewImage('add_nomineeId','addNomIdPreview')"></label>
+        <div class="file-upload-wrap" style="margin-bottom:12px">
+          <label class="file-upload-btn">🪪 <span data-bn="নমিনির আইডি কার্ড" data-en="Nominee ID Card">নমিনির আইডি কার্ড</span>
+            <input type="file" id="add_nomineeId" accept="image/*" onchange="previewImage('add_nomineeId','addNomIdPreview')"></label>
           <div class="img-preview" id="addNomIdPreview"></div>
+        </div>
+        <div class="file-upload-wrap">
+          <label class="file-upload-btn signature-upload">✍️ <span data-bn="ক্লায়েন্টের স্বাক্ষর" data-en="Client Signature">ক্লায়েন্টের স্বাক্ষর</span>
+            <input type="file" id="add_signature" accept="image/*" onchange="previewImage('add_signature','addSigPreview')"></label>
+          <div class="img-preview sig-preview" id="addSigPreview"></div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('addModal')">বাতিল</button>
-      <button class="btn-submit" id="addSubmitBtn" onclick="addClient()">সংরক্ষণ করুন</button>
+      <button class="btn-cancel" onclick="closeModal('addModal')" data-bn="বাতিল" data-en="Cancel">বাতিল</button>
+      <button class="btn-submit" id="addSubmitBtn" onclick="addClient()" data-bn="সংরক্ষণ করুন" data-en="Save">সংরক্ষণ করুন</button>
     </div>
   </div>
 </div>
 
-<!-- ── EDIT MODAL ───────────────────────────────────────────── -->
+<!-- ── EDIT MODAL ─── -->
 <div class="modal-overlay" id="editModal" onclick="handleOverlayClick(event,'editModal')">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">✏️ ক্লায়েন্ট তথ্য এডিট করুন</span>
+      <span class="modal-title">✏️ <span data-bn="ক্লায়েন্ট তথ্য এডিট করুন" data-en="Edit Client Info">ক্লায়েন্ট তথ্য এডিট করুন</span></span>
       <button class="modal-close" onclick="closeModal('editModal')">✕</button>
     </div>
     <div class="modal-body">
       <form id="editClientForm" onsubmit="return false;">
-        <p class="section-label">📋 পলিসি তথ্য</p>
+        <p class="section-label">📋 <span data-bn="পলিসি তথ্য" data-en="Policy Information">পলিসি তথ্য</span></p>
         <div class="form-row two-col">
-          <div class="field"><label>নাম *</label><input type="text" id="edit_name" required></div>
-          <div class="field"><label>পলিসি নম্বর *</label><input type="text" id="edit_policy" required></div>
+          <div class="field"><label data-bn="নাম *" data-en="Name *">নাম *</label><input type="text" id="edit_name" required></div>
+          <div class="field"><label data-bn="পলিসি নম্বর *" data-en="Policy No *">পলিসি নম্বর *</label><input type="text" id="edit_policy" required></div>
         </div>
         <div class="form-row two-col" style="margin-top:14px">
-          <div class="field"><label>ফোন *</label><input type="tel" id="edit_phone" required></div>
-          <div class="field"><label>নমিনি</label><input type="text" id="edit_nominee"></div>
-        </div>
-        <div class="form-row two-col" style="margin-top:14px">
-          <div class="field"><label>শুরুর তারিখ</label><input type="date" id="edit_start_date"></div>
-          <div class="field"><label>মেয়াদ শেষ</label><input type="date" id="edit_expiry"></div>
+          <div class="field"><label data-bn="ফোন *" data-en="Phone *">ফোন *</label><input type="tel" id="edit_phone" required></div>
+          <div class="field"><label data-bn="নমিনি" data-en="Nominee">নমিনি</label><input type="text" id="edit_nominee"></div>
         </div>
         <div class="form-row" style="margin-top:14px">
-          <div class="field"><label>💰 পরিমাণ (টাকা)</label><input type="number" id="edit_amount"></div>
+          <div class="field"><label data-bn="💰 পরিমাণ (টাকা)" data-en="💰 Amount (BDT)">💰 পরিমাণ (টাকা)</label><input type="number" id="edit_amount"></div>
         </div>
-        <p class="section-label">📎 ডকুমেন্ট আপডেট</p>
-        <small style="color:var(--gray-500);display:block;margin-bottom:12px;font-size:12px;">নতুন ফাইল না বেছে নিলে পুরনো ফাইল থাকবে।</small>
-        <div class="file-upload-wrap" style="margin-bottom:12px">
-          <label class="file-upload-btn">📷 নতুন ছবি (ঐচ্ছিক)<input type="file" id="edit_photo" accept="image/*" onchange="previewImage('edit_photo','editPhotoPreview')"></label>
+        <p class="section-label">📎 <span data-bn="ডকুমেন্ট আপডেট" data-en="Update Documents">ডকুমেন্ট আপডেট</span></p>
+        <small class="doc-hint" data-bn="নতুন ফাইল না বেছে নিলে পুরনো ফাইল থাকবে।" data-en="Old file will be kept if no new file is selected.">নতুন ফাইল না বেছে নিলে পুরনো ফাইল থাকবে।</small>
+        <div class="file-upload-wrap" style="margin-bottom:12px;margin-top:12px">
+          <label class="file-upload-btn">📷 <span data-bn="নতুন ছবি (ঐচ্ছিক)" data-en="New Photo (Optional)">নতুন ছবি (ঐচ্ছিক)</span>
+            <input type="file" id="edit_photo" accept="image/*" onchange="previewImage('edit_photo','editPhotoPreview')"></label>
           <div class="img-preview" id="editPhotoPreview"></div>
         </div>
         <div class="file-upload-wrap" style="margin-bottom:12px">
-          <label class="file-upload-btn">🪪 নতুন আইডি কার্ড (ঐচ্ছিক)<input type="file" id="edit_idcard" accept="image/*" onchange="previewImage('edit_idcard','editIdPreview')"></label>
+          <label class="file-upload-btn">🪪 <span data-bn="নতুন আইডি কার্ড (ঐচ্ছিক)" data-en="New ID Card (Optional)">নতুন আইডি কার্ড (ঐচ্ছিক)</span>
+            <input type="file" id="edit_idcard" accept="image/*" onchange="previewImage('edit_idcard','editIdPreview')"></label>
           <div class="img-preview" id="editIdPreview"></div>
         </div>
-        <div class="file-upload-wrap">
-          <label class="file-upload-btn">🪪 নমিনির নতুন আইডি (ঐচ্ছিক)<input type="file" id="edit_nomineeId" accept="image/*" onchange="previewImage('edit_nomineeId','editNomIdPreview')"></label>
+        <div class="file-upload-wrap" style="margin-bottom:12px">
+          <label class="file-upload-btn">🪪 <span data-bn="নমিনির নতুন আইডি (ঐচ্ছিক)" data-en="New Nominee ID (Optional)">নমিনির নতুন আইডি (ঐচ্ছিক)</span>
+            <input type="file" id="edit_nomineeId" accept="image/*" onchange="previewImage('edit_nomineeId','editNomIdPreview')"></label>
           <div class="img-preview" id="editNomIdPreview"></div>
+        </div>
+        <div class="file-upload-wrap">
+          <label class="file-upload-btn signature-upload">✍️ <span data-bn="নতুন স্বাক্ষর (ঐচ্ছিক)" data-en="New Signature (Optional)">নতুন স্বাক্ষর (ঐচ্ছিক)</span>
+            <input type="file" id="edit_signature" accept="image/*" onchange="previewImage('edit_signature','editSigPreview')"></label>
+          <div class="img-preview sig-preview" id="editSigPreview"></div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('editModal')">বাতিল</button>
-      <button class="btn-submit" id="editSubmitBtn" onclick="updateClient()">আপডেট করুন</button>
+      <button class="btn-cancel" onclick="closeModal('editModal')" data-bn="বাতিল" data-en="Cancel">বাতিল</button>
+      <button class="btn-submit" id="editSubmitBtn" onclick="updateClient()" data-bn="আপডেট করুন" data-en="Update">আপডেট করুন</button>
     </div>
   </div>
 </div>
 
-<!-- ── DELETE MODAL ─────────────────────────────────────────── -->
+<!-- ── DELETE MODAL ─── -->
 <div class="modal-overlay" id="deleteModal" onclick="handleOverlayClick(event,'deleteModal')">
   <div class="modal" style="max-width:380px">
     <div class="modal-header">
-      <span class="modal-title">ডিলিট নিশ্চিত করুন</span>
+      <span class="modal-title" data-bn="ডিলিট নিশ্চিত করুন" data-en="Confirm Delete">ডিলিট নিশ্চিত করুন</span>
       <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
     </div>
     <div class="modal-body" style="text-align:center;padding:24px 20px 10px">
       <div class="delete-icon">🗑️</div>
-      <div class="delete-title">নিশ্চিত করুন</div>
-      <p class="delete-msg">আপনি কি সত্যিই <span class="delete-name" id="deleteClientName"></span> এর সব তথ্য মুছে ফেলতে চান?</p>
+      <div class="delete-title" data-bn="নিশ্চিত করুন" data-en="Are you sure?">নিশ্চিত করুন</div>
+      <p class="delete-msg"><span data-bn="আপনি কি সত্যিই" data-en="Delete all data for">আপনি কি সত্যিই</span> <span class="delete-name" id="deleteClientName"></span> <span data-bn="এর সব তথ্য মুছে ফেলতে চান?" data-en="?">এর সব তথ্য মুছে ফেলতে চান?</span></p>
     </div>
     <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('deleteModal')">না, রাখুন</button>
-      <button class="btn-delete-confirm" onclick="deleteClient()">হ্যাঁ, মুছুন</button>
+      <button class="btn-cancel" onclick="closeModal('deleteModal')" data-bn="না, রাখুন" data-en="No, Keep">না, রাখুন</button>
+      <button class="btn-delete-confirm" onclick="deleteClient()" data-bn="হ্যাঁ, মুছুন" data-en="Yes, Delete">হ্যাঁ, মুছুন</button>
     </div>
   </div>
 </div>
 
-<!-- ── DOCS MODAL ───────────────────────────────────────────── -->
+<!-- ── DOCS MODAL ─── -->
 <div class="modal-overlay" id="docsModal" onclick="handleOverlayClick(event,'docsModal')">
   <div class="modal" style="max-width:480px">
     <div class="modal-header">
-      <span class="modal-title">📎 ডকুমেন্টসমূহ</span>
+      <span class="modal-title">📎 <span data-bn="ডকুমেন্টসমূহ" data-en="Documents">ডকুমেন্টসমূহ</span></span>
       <button class="modal-close" onclick="closeModal('docsModal')">✕</button>
     </div>
     <div class="modal-body" id="docsModalBody"></div>
     <div class="modal-footer">
-      <button class="btn-submit" style="flex:1" onclick="closeModal('docsModal')">বন্ধ করুন</button>
+      <button class="btn-submit" style="flex:1" onclick="closeModal('docsModal')" data-bn="বন্ধ করুন" data-en="Close">বন্ধ করুন</button>
     </div>
   </div>
 </div>
@@ -293,7 +297,44 @@
 <script src="auth.js"></script>
 <script src="app.js"></script>
 <script>
+  // ── Language System ──────────────────────────────────────────
+  let currentLang = localStorage.getItem('pcm_lang') || 'bn';
+
+  function applyLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('pcm_lang', lang);
+    document.documentElement.setAttribute('data-lang', lang);
+    document.querySelectorAll('[data-bn]').forEach(el => {
+      el.textContent = lang === 'bn' ? el.getAttribute('data-bn') : el.getAttribute('data-en');
+    });
+    document.querySelectorAll('[data-bn-placeholder]').forEach(el => {
+      el.placeholder = lang === 'bn' ? el.getAttribute('data-bn-placeholder') : el.getAttribute('data-en-placeholder');
+    });
+    document.getElementById('langIcon').textContent = lang === 'bn' ? 'বাং' : 'EN';
+    document.getElementById('langText').textContent = lang === 'bn' ? ' / EN' : ' / বাং';
+  }
+
+  function toggleLanguage() {
+    applyLanguage(currentLang === 'bn' ? 'en' : 'bn');
+  }
+
+  // ── Dark Mode System ─────────────────────────────────────────
+  let isDark = localStorage.getItem('pcm_theme') === 'dark';
+
+  function applyTheme(dark) {
+    isDark = dark;
+    localStorage.setItem('pcm_theme', dark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    document.getElementById('themeIcon').textContent = dark ? '☀️' : '🌙';
+  }
+
+  function toggleDarkMode() { applyTheme(!isDark); }
+
+  // Init
+  applyTheme(isDark);
+  applyLanguage(currentLang);
   initApp();
+
   function handleOverlayClick(event, modalId) {
     if (event.target === document.getElementById(modalId)) closeModal(modalId);
   }
