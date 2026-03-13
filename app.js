@@ -167,19 +167,21 @@ async function addClient() {
     if (!existing.empty) { showToast('এই পলিসি নম্বর আগে থেকেই আছে!', 'error'); btn.disabled = false; btn.textContent = 'সংরক্ষণ করুন'; return; }
 
     const uid = auth.currentUser.uid;
-    let photo_url = '', id_card_url = '', nominee_id_url = '', signature_url = '';
+    let photo_url = '', id_card_url = '', nominee_id_url = '', nominee_photo_url = '', signature_url = '';
     const photoFile = document.getElementById('add_photo').files[0];
     const idFile = document.getElementById('add_idcard').files[0];
     const nomFile = document.getElementById('add_nomineeId').files[0];
+    const nomPhotoFile = document.getElementById('add_nomineePhoto').files[0];
     const sigFile = document.getElementById('add_signature').files[0];
     if (photoFile) photo_url = await uploadFile(photoFile);
     if (idFile) id_card_url = await uploadFile(idFile);
     if (nomFile) nominee_id_url = await uploadFile(nomFile);
+    if (nomPhotoFile) nominee_photo_url = await uploadFile(nomPhotoFile);
     if (sigFile) signature_url = await uploadFile(sigFile);
 
     await db.collection('clients').add({
       name, policy_number, phone, nominee, amount,
-      photo_url, id_card_url, nominee_id_url, signature_url,
+      photo_url, id_card_url, nominee_id_url, nominee_photo_url, signature_url,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       userId: uid
     });
@@ -202,6 +204,7 @@ function openEditModal(id) {
   setPreview('editPhotoPreview', client.photo_url);
   setPreview('editIdPreview', client.id_card_url);
   setPreview('editNomIdPreview', client.nominee_id_url);
+  setPreview('editNomPhotoPreview', client.nominee_photo_url);
   setPreview('editSigPreview', client.signature_url);
   openModal('editModal');
 }
@@ -233,18 +236,21 @@ async function updateClient() {
     let id_card_url = existing.id_card_url || '';
     let nominee_id_url = existing.nominee_id_url || '';
     let signature_url = existing.signature_url || '';
+    let nominee_photo_url = existing.nominee_photo_url || '';
     const photoFile = document.getElementById('edit_photo').files[0];
     const idFile = document.getElementById('edit_idcard').files[0];
     const nomFile = document.getElementById('edit_nomineeId').files[0];
+    const nomPhotoFile = document.getElementById('edit_nomineePhoto').files[0];
     const sigFile = document.getElementById('edit_signature').files[0];
     if (photoFile) photo_url = await uploadFile(photoFile);
     if (idFile) id_card_url = await uploadFile(idFile);
     if (nomFile) nominee_id_url = await uploadFile(nomFile);
+    if (nomPhotoFile) nominee_photo_url = await uploadFile(nomPhotoFile);
     if (sigFile) signature_url = await uploadFile(sigFile);
 
     await db.collection('clients').doc(currentEditId).update({
       name, policy_number, phone, nominee, amount,
-      photo_url, id_card_url, nominee_id_url, signature_url,
+      photo_url, id_card_url, nominee_id_url, nominee_photo_url, signature_url,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     showToast('✅ ক্লায়েন্ট আপডেট হয়েছে!', 'success');
@@ -292,6 +298,7 @@ function viewDocs(id) {
     <h3 class="doc-client-name">${escHtml(client.name)} — ${escHtml(client.policy_number)}</h3>
     ${docItem(client.photo_url, '👤 ক্লায়েন্ট ছবি / Client Photo')}
     ${docItem(client.id_card_url, '🪪 আইডি কার্ড / ID Card')}
+    ${docItem(client.nominee_photo_url, '📷 নমিনির ছবি / Nominee Photo')}
     ${docItem(client.nominee_id_url, '🪪 নমিনির আইডি কার্ড / Nominee ID')}
     ${docItem(client.signature_url, '✍️ স্বাক্ষর / Signature')}`;
   openModal('docsModal');
@@ -565,7 +572,7 @@ function closeModal(id) { document.getElementById(id).classList.remove('active')
 
 function resetAddForm() {
   document.getElementById('addClientForm').reset();
-  ['addPhotoPreview','addIdPreview','addNomIdPreview','addSigPreview'].forEach(id => {
+  ['addPhotoPreview','addIdPreview','addNomIdPreview','addNomPhotoPreview','addSigPreview'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.innerHTML = ''; el.style.display = 'none'; }
   });
