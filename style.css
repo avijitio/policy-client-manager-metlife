@@ -1219,3 +1219,260 @@ input, select, textarea {
 
 .btn-doc-download { background: var(--teal); color: white; }
 .btn-doc-download:hover { background: var(--teal-dark); }
+/* ================================================================
+   DARK MODE
+   ================================================================ */
+[data-theme="dark"] {
+  --white: #1e2a3a;
+  --gray-50: #162032;
+  --gray-100: #1a2840;
+  --gray-200: #243450;
+  --gray-300: #2e4060;
+  --gray-500: #7a96b8;
+  --gray-700: #a8c0d8;
+  --gray-900: #e2eaf4;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+[data-theme="dark"] body {
+  background: #0d1a2e;
+  color: #e2eaf4;
+}
+
+[data-theme="dark"] .topnav {
+  background: #091525;
+  border-bottom: 1px solid #1e3050;
+}
+
+[data-theme="dark"] .tab-nav {
+  background: #0f2040;
+  border-bottom-color: #1e3050;
+}
+
+[data-theme="dark"] .tab-btn.active {
+  color: var(--teal-light);
+  border-bottom-color: var(--teal-light);
+}
+
+[data-theme="dark"] .client-card {
+  background: #142030;
+  border-color: #1e3050;
+}
+
+[data-theme="dark"] .client-name { color: #e2eaf4; }
+[data-theme="dark"] .stat-card { background: #142030; border-color: #1e3050; }
+[data-theme="dark"] .stat-num { color: #e2eaf4; }
+
+[data-theme="dark"] .search-wrap {
+  background: #142030;
+  border-color: #1e3050;
+}
+[data-theme="dark"] .search-wrap input { color: #e2eaf4; }
+[data-theme="dark"] .search-wrap input::placeholder { color: #4a6080; }
+
+[data-theme="dark"] .modal { background: #142030; }
+[data-theme="dark"] .modal-header { background: #142030; border-bottom-color: #1e3050; }
+[data-theme="dark"] .modal-footer { background: #142030; border-top-color: #1e3050; }
+[data-theme="dark"] .modal-title { color: #e2eaf4; }
+[data-theme="dark"] .modal-close { background: #1e3050; color: #7a96b8; }
+[data-theme="dark"] .modal-close:hover { background: #243450; color: #e2eaf4; }
+
+[data-theme="dark"] .field label { color: #a8c0d8; }
+[data-theme="dark"] .field input, [data-theme="dark"] .field select {
+  background: #0d1a2e;
+  border-color: #1e3050;
+  color: #e2eaf4;
+}
+[data-theme="dark"] .field input:focus, [data-theme="dark"] .field select:focus {
+  background: #142030;
+  border-color: var(--teal);
+}
+
+[data-theme="dark"] .file-upload-btn {
+  background: #0d1a2e;
+  border-color: #1e3050;
+  color: #7a96b8;
+}
+[data-theme="dark"] .file-upload-btn:hover { border-color: var(--teal); background: #0d1a2e; }
+
+[data-theme="dark"] .section-label { color: var(--teal-light); }
+[data-theme="dark"] .section-label::after { background: #1e3050; }
+
+[data-theme="dark"] .btn-cancel { background: #1e3050; color: #a8c0d8; }
+[data-theme="dark"] .btn-cancel:hover { background: #243450; }
+
+[data-theme="dark"] .report-filter-card,
+[data-theme="dark"] .report-card { background: #142030; border-color: #1e3050; }
+[data-theme="dark"] .report-filter-title,
+[data-theme="dark"] .report-card-header h3 { color: #e2eaf4; }
+[data-theme="dark"] .report-date-input {
+  background: #0d1a2e;
+  border-color: #1e3050;
+  color: #e2eaf4;
+}
+[data-theme="dark"] .report-date-input:focus { background: #142030; }
+[data-theme="dark"] .btn-report-reset { background: #1e3050; color: #a8c0d8; }
+[data-theme="dark"] .btn-report-reset:hover { background: #243450; }
+[data-theme="dark"] .rstat-card { background: #142030; }
+[data-theme="dark"] .rstat-num { color: #e2eaf4; }
+[data-theme="dark"] .year-select { background: #0d1a2e; border-color: #1e3050; color: #e2eaf4; }
+[data-theme="dark"] .bar-wrap { background: #0d1a2e; }
+[data-theme="dark"] .expiry-tab { background: #1e3050; color: #a8c0d8; }
+[data-theme="dark"] .expiry-tab:hover:not(.active) { background: #243450; }
+[data-theme="dark"] .report-table thead tr { background: #091525; }
+[data-theme="dark"] .report-table td { border-bottom-color: #1e3050; color: #e2eaf4; }
+[data-theme="dark"] .report-table tbody tr:hover { background: #1e3050; }
+
+[data-theme="dark"] .btn-call { background: #0d2a1a; color: #4ade80; border-color: #1a4a2a; }
+[data-theme="dark"] .btn-whatsapp { background: #0d2a1a; color: #4ade80; border-color: #1a4a2a; }
+[data-theme="dark"] .btn-pdf { background: #2a0d0d; color: #f87171; border-color: #4a1a1a; }
+[data-theme="dark"] .btn-edit { background: #0d1a3a; color: #60a5fa; border-color: #1a2a5a; }
+[data-theme="dark"] .btn-delete { background: #2a0d0d; color: #f87171; border-color: #4a1a1a; }
+[data-theme="dark"] .btn-docs { background: #1a0d2a; color: #c084fc; border-color: #2a1a4a; }
+
+[data-theme="dark"] .btn-excel { background: #142030; border-color: #1e3050; color: #a8c0d8; }
+[data-theme="dark"] .btn-excel:hover { border-color: var(--green); color: var(--green); }
+
+[data-theme="dark"] .card-details {
+  border-top-color: #1e3050;
+  border-bottom-color: #1e3050;
+}
+[data-theme="dark"] .detail-item { color: #a8c0d8; }
+[data-theme="dark"] .empty-state h3 { color: #a8c0d8; }
+
+[data-theme="dark"] .doc-item .doc-img { border-color: #1e3050; }
+[data-theme="dark"] .doc-missing { background: #0d1a2e; }
+[data-theme="dark"] .doc-client-name { color: #e2eaf4; }
+[data-theme="dark"] .btn-doc-view { background: #1e3050; color: #a8c0d8; border-color: #243450; }
+[data-theme="dark"] .btn-doc-view:hover { background: #091525; color: white; }
+
+[data-theme="dark"] .delete-title { color: #e2eaf4; }
+[data-theme="dark"] .delete-msg { color: #a8c0d8; }
+
+[data-theme="dark"] .expiry-alerts {
+  background: linear-gradient(135deg, #2a1a0a, #3a2010);
+  border-color: #8a4a10;
+}
+[data-theme="dark"] .alert-header { color: #fbbf24; }
+[data-theme="dark"] .alert-list li { background: rgba(255,255,255,0.05); color: #f0c080; }
+
+[data-theme="dark"] .doc-hint { color: #7a96b8; }
+
+/* ================================================================
+   NAV TOGGLE BUTTONS (Language + Dark Mode)
+   ================================================================ */
+.nav-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 7px 11px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--white);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Hind Siliguri', sans-serif;
+  white-space: nowrap;
+}
+
+.nav-toggle-btn:hover {
+  background: rgba(0,180,216,0.18);
+  border-color: var(--teal);
+  color: var(--teal-light);
+}
+
+.dark-toggle {
+  font-size: 15px;
+  padding: 6px 10px;
+}
+
+/* ================================================================
+   SIGNATURE UPLOAD & PREVIEW
+   ================================================================ */
+.signature-upload {
+  border-color: var(--teal) !important;
+  background: linear-gradient(135deg, rgba(0,180,216,0.05), rgba(0,150,199,0.08)) !important;
+  color: var(--teal-dark) !important;
+}
+
+.signature-upload:hover {
+  background: linear-gradient(135deg, rgba(0,180,216,0.12), rgba(0,150,199,0.15)) !important;
+}
+
+.sig-preview img {
+  width: auto !important;
+  max-width: 200px !important;
+  height: 60px !important;
+  object-fit: contain !important;
+  border-radius: 6px !important;
+  border: 1px dashed var(--teal) !important;
+  background: var(--gray-50);
+  padding: 4px;
+}
+
+[data-theme="dark"] .sig-preview img {
+  background: #0d1a2e;
+}
+
+/* Signature badge */
+.badge-sig {
+  background: linear-gradient(135deg, rgba(0,180,216,0.15), rgba(0,150,199,0.2));
+  color: var(--teal-dark);
+  border: 1px solid rgba(0,180,216,0.3);
+}
+
+/* ================================================================
+   ENHANCED CARD DESIGN
+   ================================================================ */
+.client-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.client-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.client-card:hover::before { opacity: 1; }
+
+/* ================================================================
+   DOC HINT
+   ================================================================ */
+.doc-hint {
+  color: var(--gray-500);
+  display: block;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+/* ================================================================
+   IMPROVED STATS CARDS
+   ================================================================ */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: -10px; right: -10px;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  opacity: 0.06;
+}
+
+.stat-card.stat-blue::after { background: var(--teal); }
+.stat-card.stat-orange::after { background: var(--orange); }
+.stat-card.stat-red::after { background: var(--red); }
