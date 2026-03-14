@@ -198,6 +198,17 @@
             <input type="file" id="add_signature" accept="image/*" onchange="previewImage('add_signature','addSigPreview')"></label>
           <div class="img-preview sig-preview" id="addSigPreview"></div>
         </div>
+        <div class="file-upload-wrap extra-doc-wrap" style="margin-top:14px">
+          <label class="file-upload-btn extra-doc-upload">
+            <span class="extra-doc-icon">📄</span>
+            <div class="extra-doc-text">
+              <span data-bn="অতিরিক্ত ডকুমেন্ট" data-en="Extra Document"></span><span data-bn="অতিরিক্ত ডকুমেন্ট" data-en="Extra Document">অতিরিক্ত ডকুমেন্ট</span>
+              <small data-bn="(ঐচ্ছিক) — যেকোনো ছবি বা ডকুমেন্ট" data-en="(Optional) — Any image or document">(ঐচ্ছিক) — যেকোনো ছবি বা ডকুমেন্ট</small>
+            </div>
+            <input type="file" id="add_extra_doc" accept="image/*" onchange="previewImage('add_extra_doc','addExtraDocPreview')">
+          </label>
+          <div class="img-preview" id="addExtraDocPreview"></div>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -254,6 +265,17 @@
           <label class="file-upload-btn signature-upload">✍️ <span data-bn="নতুন স্বাক্ষর (ঐচ্ছিক)" data-en="New Signature (Optional)">নতুন স্বাক্ষর (ঐচ্ছিক)</span>
             <input type="file" id="edit_signature" accept="image/*" onchange="previewImage('edit_signature','editSigPreview')"></label>
           <div class="img-preview sig-preview" id="editSigPreview"></div>
+        </div>
+        <div class="file-upload-wrap extra-doc-wrap" style="margin-top:14px">
+          <label class="file-upload-btn extra-doc-upload">
+            <span class="extra-doc-icon">📄</span>
+            <div class="extra-doc-text">
+              <span data-bn="অতিরিক্ত ডকুমেন্ট (ঐচ্ছিক)" data-en="Extra Document (Optional)">অতিরিক্ত ডকুমেন্ট (ঐচ্ছিক)</span>
+              <small data-bn="নতুন ফাইল না বেছে নিলে পুরনো ফাইল থাকবে।" data-en="Old file will be kept if no new file is selected.">নতুন ফাইল না বেছে নিলে পুরনো ফাইল থাকবে।</small>
+            </div>
+            <input type="file" id="edit_extra_doc" accept="image/*" onchange="previewImage('edit_extra_doc','editExtraDocPreview')">
+          </label>
+          <div class="img-preview" id="editExtraDocPreview"></div>
         </div>
       </form>
     </div>
